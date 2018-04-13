@@ -207,6 +207,11 @@
 			"Rev": "f6943554a7e7e88b3c14aad190bf05932da84788"
 		},
 		{
+			"ImportPath": "github.com/coreos/go-systemd/daemon",
+			"Comment": "v8-2-g4484981",
+			"Rev": "4484981625c1a6a2ecb40a390fcb6a9bcfee76e3"
+		},
+		{
 			"ImportPath": "github.com/coreos/go-systemd/dbus",
 			"Comment": "v8-2-g4484981",
 			"Rev": "4484981625c1a6a2ecb40a390fcb6a9bcfee76e3"

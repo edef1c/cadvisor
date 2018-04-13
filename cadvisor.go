@@ -17,6 +17,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"net"
 	"net/http"
 	"net/http/pprof"
 	"os"
@@ -26,6 +27,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/coreos/go-systemd/daemon"
 	"github.com/google/cadvisor/container"
 	cadvisorhttp "github.com/google/cadvisor/http"
 	"github.com/google/cadvisor/manager"
@@ -165,7 +167,12 @@ func main() {
 	glog.V(1).Infof("Starting cAdvisor version: %s-%s on port %d", version.Info["version"], version.Info["revision"], *argPort)
 
 	addr := fmt.Sprintf("%s:%d", *argIp, *argPort)
-	glog.Fatal(http.ListenAndServe(addr, mux))
+	ln, err := net.Listen("tcp", addr)
+	if err != nil {
+		glog.Fatal(err)
+	}
+	daemon.SdNotify("READY=1")
+	glog.Fatal(http.Serve(ln, mux))
 }
 
 func setMaxProcs() {
